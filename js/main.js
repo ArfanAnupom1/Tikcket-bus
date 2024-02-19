@@ -14,8 +14,14 @@ function applyCoupon() {
 
     if (inputValue === 'NEW15') {
         discount = 0.15;
-    } else if (inputValue === 'Couple20') {
+        hideElementById('next');
+        hideElementById('couponInput');
+
+
+    } else if (inputValue === 'Couple 20') {
         discount = 0.20;
+        hideElementById('next');
+        hideElementById('couponInput');
     } else {
 
         alert("Invalid coupon code. Please enter a valid coupon code.");
@@ -30,24 +36,28 @@ function applyCoupon() {
 
 
     if (discount > 0) {
-
-
-
         var discountContainer = document.createElement("div");
 
-        // Add the specified class to the discountContainer
+
         discountContainer.classList.add("col-span-3", "ml-4", "mt-4");
 
         discountContainer.setAttribute("id", "discountdiv");
 
 
         var discountMessage = document.createElement("p");
-        discountMessage.innerText = "Discount applied: " + totalDiscount;
+
+        discountMessage.classList.add("font-bold")
+
+
+        discountMessage.innerText = "Discount applied: ----------------------------- "+ totalDiscount + "BDT";
 
         discountContainer.appendChild(discountMessage);
 
         inputElement.parentNode.appendChild(discountContainer);
     }
+
+
+
 
     console.log(grandTotal);
     var applyButton = document.getElementById("next");
@@ -149,9 +159,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (seatButton.classList.contains('bg-green-600')) {
             unselectSeat(seatButton);
+            showElementById('next');
+            showElementById('couponInput');
         } else if (seatButton.classList.contains('bg-gray-200') && availableSeats > 0) {
             selectSeat(seatButton);
-            // applyCoupon();
+
         }
         if (countSelectedSeats() === maxSeatsAllowed) {
             var applyButton = document.getElementById("next");
@@ -171,10 +183,12 @@ document.addEventListener("DOMContentLoaded", function () {
     function unselectSeat(seatButton) {
         seatButton.classList.remove('bg-green-600');
         seatButton.classList.add('bg-gray-200');
+
         availableSeats++;
         updateSeatDisplay();
         updateTotalPrice(-550);
         removeTableRow(seatButton.innerText);
+
     }
 
     function selectSeat(seatButton) {
@@ -240,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updateSeatDisplay();
         updateTotalPrice(-550);
         removeTableRow(seatButton.innerText);
-        updateSupElement(); // Update the value of #sup element
+        updateSupElement();
     }
 
     function selectSeat(seatButton) {
@@ -256,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updateSeatDisplay();
         updateTotalPrice(550);
         appendTableRow(seatButton.innerText, 'Economy', 550);
-        updateSupElement(); // Update the value of #sup element
+        updateSupElement();
     }
 
     function updateSupElement() {
